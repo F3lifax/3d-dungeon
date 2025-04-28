@@ -1,12 +1,102 @@
-[gd_scene load_steps=4 format=3 uid="uid://42iomd8u1cv0"]
+[gd_scene load_steps=8 format=3 uid="uid://42iomd8u1cv0"]
 
-[ext_resource type="Script" path="res://World.gd" id="1"]
+[ext_resource type="Script" uid="uid://cjegpfkldloef" path="res://World.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://cl51d6htwhay8" path="res://Map.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://d3ykgvyrofc7h" path="res://Player.tscn" id="3"]
 
-[node name="World" type="Node3D"]
+[sub_resource type="LabelSettings" id="LabelSettings_bcbcq"]
+font_size = 96
+
+[sub_resource type="Animation" id="Animation_bcbcq"]
+resource_name = "DeathFadeIn"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.682353)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect/Label:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_js7pq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect/Label:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eu7l1"]
+_data = {
+&"DeathFadeIn": SubResource("Animation_bcbcq"),
+&"RESET": SubResource("Animation_js7pq")
+}
+
+[node name="World" type="Node3D" node_paths=PackedStringArray("player")]
 script = ExtResource("1")
 Map = ExtResource("2")
+player = NodePath("Player")
 
 [node name="Player" parent="." instance=ExtResource("3")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="DeathScreen" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="DeathScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.656859, 0.139277, 0.0676249, 0.862745)
+
+[node name="Label" type="Label" parent="DeathScreen/ColorRect"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 647.0
+text = "YOU DIED"
+label_settings = SubResource("LabelSettings_bcbcq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DeathAnimPlayer" type="AnimationPlayer" parent="DeathScreen"]
+libraries = {
+&"": SubResource("AnimationLibrary_eu7l1")
+}

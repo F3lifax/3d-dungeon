@@ -5,6 +5,7 @@ extends Node3D
 @onready var back: = $RayBack
 @onready var right: = $RayRight
 @onready var left: = $RayLeft
+#@export var Map : PackedScene
 
 func collision_check(direction : RayCast3D):
 	if direction != null:
@@ -61,3 +62,25 @@ func _on_Timer_timeout() -> void:
 		timerprocessor.stop()
 		await tween_translation(get_direction(ray_dir))
 		timerprocessor.start()
+	#check_for_trap()
+#
+#func check_for_trap():
+	#var tile_map = Map.get_tilemap()
+	#if tile_map == null:
+		#print("TileMap not assigned to Player!")
+		#return
+#
+	#var cell_pos = Vector2i(position.x / Globals.GRID_SIZE, position.z / Globals.GRID_SIZE)
+	#var tileid = tile_map.get_cell_source_id(0, cell_pos)
+#
+	#if tileid == 1:
+		#die()
+#
+#
+#func die():
+	#var death_screen = get_tree().current_scene.get_node("DeathScreen")
+	#death_screen.visible = true
+	#get_tree().create_timer(3.0).timeout.connect(_on_death_timeout)
+#
+#func _on_death_timeout():
+	#get_tree().reload_current_scene()

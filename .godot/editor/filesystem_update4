@@ -1,5 +1,12 @@
+res://Cell.tscn
+res://Map.tscn
+res://MapCreator.tscn
+res://NormalMapTest.tscn
+res://Player.tscn
 res://World.tscn
 res://Floor.tres
 res://Wall.tres
-res://Player.tscn
-res://Map.tscn
+res://World.gd
+res://TrapCell.tscn
+res://Player.gd
+res://trap_cell.gd

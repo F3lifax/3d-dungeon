@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://cl2kxrllekwlh"]
+
+[ext_resource type="Script" uid="uid://qdfdtxy0nlyw" path="res://trap_cell.gd" id="1_1xyop"]
+[ext_resource type="Material" uid="uid://cyvsymi8tppug" path="res://Floor.tres" id="2_lgi6f"]
+[ext_resource type="ArrayMesh" uid="uid://cui4hclqv7meq" path="res://Floor.obj" id="3_1xyop"]
+[ext_resource type="Material" uid="uid://sj7pva1v7rg4" path="res://Wall.tres" id="4_a1ymf"]
+[ext_resource type="ArrayMesh" uid="uid://cnc11pjixddu4" path="res://Wall.obj" id="5_splsb"]
+[ext_resource type="Texture2D" uid="uid://b270ufbfpm1dx" path="res://Floor.png" id="6_1xyop"]
+[ext_resource type="Texture2D" uid="uid://dms8fe8rg0e83" path="res://FloorNormals.png" id="7_a1ymf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_splsb"]
+diffuse_mode = 1
+specular_mode = 4
+albedo_color = Color(1, 1, 0, 1)
+albedo_texture = ExtResource("6_1xyop")
+metallic = 1.0
+normal_enabled = true
+normal_texture = ExtResource("7_a1ymf")
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="2"]
+
+[node name="Cell" type="Area3D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_1xyop")
+
+[node name="TopFace" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 2, 0)
+material_override = ExtResource("2_lgi6f")
+mesh = ExtResource("3_1xyop")
+
+[node name="NorthFace" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 4.37114e-08, -4.37114e-08, -4.37114e-08, 4.37114e-08, 1, 4.37114e-08, 1, -4.37114e-08, 0, 1, -1)
+material_override = ExtResource("4_a1ymf")
+mesh = ExtResource("5_splsb")
+
+[node name="EastFace" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, 1, -1, 4.37114e-08, -4.37114e-08, 1, 1, 0)
+material_override = ExtResource("4_a1ymf")
+mesh = ExtResource("5_splsb")
+
+[node name="SouthFace" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, -4.37114e-08, 4.37114e-08, -4.37114e-08, 1.31134e-07, 1, -4.37114e-08, -1, 1.31134e-07, 0, 1, 1)
+material_override = ExtResource("4_a1ymf")
+mesh = ExtResource("5_splsb")
+
+[node name="WestFace" type="MeshInstance3D" parent="."]
+transform = Transform3D(4.37114e-08, 1, -8.74228e-08, -4.37114e-08, 8.74228e-08, 1, 1, -4.37114e-08, 4.37114e-08, -1, 1, 0)
+material_override = ExtResource("4_a1ymf")
+mesh = ExtResource("5_splsb")
+
+[node name="BottomFace" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_splsb")
+mesh = ExtResource("3_1xyop")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("2")
